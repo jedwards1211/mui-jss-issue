@@ -4,7 +4,6 @@ const path = require('path')
 const webpack = require('webpack')
 const HappyPack = require('happypack')
 const ProgressPlugin = require('webpack/lib/ProgressPlugin')
-const defines = require('./defines')
 
 const babelOptions = require('./babelOptions')
 const babelInclude = require('./babelInclude')
@@ -36,11 +35,6 @@ const config = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.DefinePlugin({
-      ...defines,
-      '__CLIENT__': true,
-      '__SERVER__': false,
-    }),
     new HappyPack({
       loaders: [
         {
@@ -56,30 +50,6 @@ const config = {
   },
   module: {
     rules: [
-      {test: /\.json$/, loader: 'json-loader'},
-      {test: /\.txt$/, loader: 'raw-loader'},
-      {
-        test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/, use: [
-          {
-            loader: 'url-loader',
-            options: {limit: 10000},
-          }
-        ]
-      },
-      {test: /\.(eot|ttf|wav|mp3)$/, loader: 'file-loader'},
-      {test: /\.css$/, use: ['style-loader', 'css-loader']},
-      {
-        test: /\.s[ac]ss$/, use: [
-          {loader: 'style-loader'},
-          {loader: 'css-loader'},
-          {loader: 'sass-loader'},
-        ]
-      },
-      {
-        test: /Feature\.js$/,
-        include: path.join(srcDir, 'universal', 'features'),
-        loader: 'redux-features-hot-loader',
-      },
       {
         test: /\.js$/,
         loader: process.env.NO_HAPPYPACK ? 'babel-loader' : 'happypack/loader',

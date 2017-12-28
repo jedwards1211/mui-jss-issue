@@ -1,13 +1,13 @@
 /* @flow */
 
 import * as React from 'react'
-import {Provider} from 'react-redux'
 import {StaticRouter} from 'react-router-dom'
 import {renderToString} from 'react-dom/server'
 import {SheetsRegistry, JssProvider} from 'react-jss'
+import {MuiThemeProvider, createGenerateClassName} from 'material-ui/styles'
+import theme from '../../universal/theme'
 
 import App from '../../universal/components/App'
-import type {Store} from '../../universal/redux/types'
 import '../../universal/components/initJss'
 
 type Props = {
@@ -25,17 +25,16 @@ process.env = process.env || {}
 ${environmentVars.map(name => `process.env[${JSON.stringify(name)}] = ${JSON.stringify(process.env[name] || '')}`).join('\n')}
 `
 
-const Html = ({routerContext, location, title, assets, store}: Props): React.Element<any> => {
+const Html = ({routerContext, location, title, assets}: Props): React.Element<any> => {
   const {manifest, app, vendor} = assets || {}
-  const initialState = `window.__INITIAL_STATE__ = ${JSON.stringify(store.getState().set('features', {}))}`
   const sheets = new SheetsRegistry()
   const root = renderToString(
-    <JssProvider registry={sheets}>
-      <Provider store={store}>
+    <JssProvider registry={sheets} generateClassName={createGenerateClassName()}>
+      <MuiThemeProvider theme={theme} sheetsManager={new Map()}>
         <StaticRouter context={routerContext} location={location}>
           <App />
         </StaticRouter>
-      </Provider>
+      </MuiThemeProvider>
     </JssProvider>
   )
 
@@ -54,7 +53,6 @@ const Html = ({routerContext, location, title, assets, store}: Props): React.Ele
       </head>
       <body>
         <script dangerouslySetInnerHTML={{__html: environmentScript}} />
-        <script dangerouslySetInnerHTML={{__html: initialState}} />
         <div id="root" dangerouslySetInnerHTML={{__html: root}} />
         {manifest && <script dangerouslySetInnerHTML={{__html: manifest.text}} />}
         {vendor && <script src={vendor.js} />}

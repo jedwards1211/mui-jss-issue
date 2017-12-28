@@ -5,12 +5,10 @@
 <PROJECT_ROOT>/node_modules/.*/test/.*
 <PROJECT_ROOT>/node_modules/jss/.*/.*\.js\.flow
 <PROJECT_ROOT>/node_modules/react-motion/.*/.*\.js\.flow
-<PROJECT_ROOT>/node_modules/babel-plugin-flow-runtime/.*
 
 [include]
 
 [libs]
-./flowlib/
 
 
 [options]

@@ -6,11 +6,7 @@ import path from 'path'
 import type {$Request, $Response} from 'express'
 import {renderToString} from 'react-dom/server'
 
-import makeStore from '../redux/makeStore'
 import Html from './Html'
-import type {Store} from '../../universal/redux/types'
-import addFeatures from '../../universal/features/addFeatures'
-import {StateRecord} from '../../universal/redux/types'
 
 const rootDir = path.resolve(__dirname, '..', '..')
 
@@ -24,16 +20,12 @@ const serverSideRender = async (req: $Request, res: $Response): Promise<void> =>
   try {
     // first create a context for <ServerRouter>, it's where we keep the
     // results of rendering for the second pass if necessary
-    const store: Store = makeStore(StateRecord())
-    addFeatures(store)
-
     const routerContext: {status?: number, url?: string} = {}
 
     const html = renderToString(
       <Html
         title="Material UI / JSS Issue"
         assets={assets}
-        store={store}
         location={req.url}
         routerContext={routerContext}
       />

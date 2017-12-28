@@ -5,7 +5,6 @@ import chokidar from 'chokidar'
 import {debounce} from 'lodash'
 // $FlowFixMe
 import _module from 'module'
-import watchMigrations from 'umzug-beobachten'
 
 type Options = {
   srcDir: string,
@@ -69,9 +68,6 @@ function runServerWithHotRestarting(options: Options): Promise<void> {
       console.error(error.stack)
     }
   }, 1000)
-
-  // $FlowFixMe
-  watchMigrations(require(path.join(serverDir, 'sequelize/umzug')))
 
   return new Promise((resolve: () => void) => {
     watcher.on('ready', () => {

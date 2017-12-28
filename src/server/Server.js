@@ -5,14 +5,6 @@ import express from 'express'
 
 import type {$Request, $Response} from 'express'
 
-import Sequelize from 'sequelize'
-import sequelize from './sequelize'
-import umzug from './sequelize/umzug'
-import databaseReady from './sequelize/databaseReady'
-import sequelizeMigrate from './sequelize/migrate'
-
-import redisReady from './redis/redisReady'
-import redisSubscriber from './redis/RedisSubscriber'
 import logger from '../universal/logger'
 import requireEnv from '@jcoreio/require-env'
 
@@ -26,27 +18,10 @@ export default class Server {
   _httpServer: ?Object;
   _running: boolean = false
   _devGlobals: Object = {
-    Sequelize,
-    sequelize,
-    umzug,
-    ...sequelize.models,
   }
 
   async start(): Promise<void> {
     if (this._running) return
-
-    await Promise.all([
-      databaseReady(),
-      redisReady(),
-    ])
-
-    redisSubscriber.start()
-
-    const forceMigrate = 'production' !== process.env.NODE_ENV
-    if (forceMigrate || process.env.DB_MIGRATE)
-      await sequelizeMigrate()
-
-    // publishCollections(publishedCollections)
 
     const app = express()
 
@@ -85,7 +60,6 @@ export default class Server {
       for (let key in this._devGlobals) delete global[key]
     }
 
-    redisSubscriber.end(true)
     const httpServer = this._httpServer
     if (httpServer) httpServer.close()
     this._httpServer = undefined

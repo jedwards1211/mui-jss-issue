@@ -1,21 +1,6 @@
 {
   "presets": [["env", {"targets": {"node": "current"}}], "react", "flow"],
   "plugins": [
-    "transform-class-properties",
-    "transform-async-generator-functions",
-    "transform-object-rest-spread",
-    "dynamic-import-node"
-  ],
-  "env": {
-    "test": {
-      "plugins": [
-        ["istanbul", {
-          "exclude": [
-            "test/**/*.js",
-            "build/**/*.js"
-          ]
-        }]
-      ]
-    }
-  }
+    "transform-class-properties"
+  ]
 }
