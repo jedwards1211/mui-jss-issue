@@ -37,7 +37,7 @@ services:
     links:
       - selenium:hub
   app:
-    image: jcoreio/webapp-base
+    image: jedwards1211/mui-jss-issue
     ports:
       - "${PORT}:80"
     environment:

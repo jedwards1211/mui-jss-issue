@@ -1,5 +1,5 @@
 {
-  "name": "@jcoreio/webapp-base",
+  "name": "@jedwards1211/mui-jss-issue",
   "engines": {
     "node": ">=8.0.0"
   },
@@ -67,7 +67,7 @@
   "main": "index.js",
   "author": "Andy Edwards <jedwards@fastmail.com>",
   "license": "UNLICENSED",
-  "description": "iron pi webapp",
+  "description": "illustrates bugs when using withStyles and injectSheet in the same project",
   "devDependencies": {
     "@commitlint/cli": "^5.2.3",
     "@commitlint/config-conventional": "^5.2.3",
@@ -150,12 +150,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jcoreio/webapp-base.git"
+    "url": "git+https://github.com/jedwards1211/mui-jss-issue.git"
   },
   "bugs": {
-    "url": "https://github.com/jcoreio/webapp-base/issues"
+    "url": "https://github.com/jedwards1211/mui-jss-issue/issues"
   },
-  "homepage": "https://github.com/jcoreio/webapp-base#readme",
+  "homepage": "https://github.com/jedwards1211/mui-jss-issue#readme",
   "pre-commit": [
     "lint",
     "flow"

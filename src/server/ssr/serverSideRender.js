@@ -31,7 +31,7 @@ const serverSideRender = async (req: $Request, res: $Response): Promise<void> =>
 
     const html = renderToString(
       <Html
-        title="<<APP_TITLE>>"
+        title="Material UI / JSS Issue"
         assets={assets}
         store={store}
         location={req.url}
